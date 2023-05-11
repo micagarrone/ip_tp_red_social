@@ -118,6 +118,13 @@ pertenece _ [] = False
 pertenece x (y:ys)  | (x == y) || (pertenece x ys) = True
                     | otherwise = False
 
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+mismosElementos t1 t2 = (longitud t1 == longitud t2) && (elementosContenidosEn t1 t2) && (elementosContenidosEn t2 t1)
+
+elementosContenidosEn :: (Eq t) => [t] -> [t] -> Bool
+elementosContenidosEn [t1] t2 = pertenece t1 t2
+elementosContenidosEn (t1:t1s) t2 = (pertenece t1 t2) && (elementosContenidosEn t1s t2) 
+
 usuariosValidos :: [Usuario] -> Bool
 usuariosValidos [u] = usuarioValido u
 usuariosValidos (u:us) = usuarioValido u && noHayIdsRepetidos (u:us) && usuariosValidos us
