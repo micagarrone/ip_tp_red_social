@@ -136,6 +136,9 @@ idsDeUsuarios :: [Usuario] -> [Integer]
 idsDeUsuarios [u] = [idDeUsuario u]
 idsDeUsuarios (u:us) = (idDeUsuario u) : idsDeUsuarios us
 
+relacionesValidas :: [Usuario] -> [Relacion] -> Bool
+relacionesValidas us rs = usuariosDeRelacionValidos us rs && noHayRelacionesRepetidas rs && relacionesAsimetricas rs
+
 usuariosDeRelacionValidos :: [Usuario] -> [Relacion] -> Bool
 usuariosDeRelacionValidos u [r] = (fst r /= snd r) && (pertenece (fst r) u) && (pertenece (snd r) u)
 usuariosDeRelacionValidos u (r:rs) = usuariosDeRelacionValidos u [r] && usuariosDeRelacionValidos u rs
@@ -145,7 +148,7 @@ relacionesAsimetricas [r] = True
 relacionesAsimetricas (r:rs)  = not (pertenece (snd r, fst r) rs) && relacionesAsimetricas rs
 
 noHayRelacionesRepetidas :: [Relacion] -> Bool
-noHayRelacionesRepetidas r = sinRepetidos r && relacionesAsimetricas r
+noHayRelacionesRepetidas r = sinRepetidos r
 
 cadenaDeAmigos :: [Usuario] -> RedSocial -> Bool
 cadenaDeAmigos [] r = True
