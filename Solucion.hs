@@ -157,6 +157,10 @@ relacionesAsimetricas (r:rs)  = not (pertenece (snd r, fst r) rs) && relacionesA
 noHayRelacionesRepetidas :: [Relacion] -> Bool
 noHayRelacionesRepetidas rs = sinRepetidos rs
 
+usuariosDeLikeDePublicacionSonUsuariosDeRed :: [Usuario] -> [Publicacion] -> Bool
+usuariosDeLikeDePublicacionSonUsuariosDeRed _ [] = True
+usuariosDeLikeDePublicacionSonUsuariosDeRed us (p:ps) = usuariosLikeValidos us (likesDePublicacion p) && usuariosDeLikeDePublicacionSonUsuariosDeRed us ps
+
 usuariosLikeValidos :: [Usuario] -> [Usuario] -> Bool
 usuariosLikeValidos us usl = elementosContenidosEn usl us
 
