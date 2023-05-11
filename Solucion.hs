@@ -71,7 +71,47 @@ tieneUnSeguidorFiel = undefined
 
 -- describir qué hace la función: .....
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
-existeSecuenciaDeAmigos = undefined
+existeSecuenciaDeAmigos red u1 u2 = estanRelacionadosIndirectamente (relaciones red) u1 u2
+
+estanRelacionadosIndirectamente :: [Relacion] -> Usuario -> Usuario -> Bool
+estanRelacionadosIndirectamente r u1 u2 | (not (sigueHabiendoUsuarioOrigen r u1)) = False
+                                        | seEncontroRelacion r u1 u2 = True
+                                        | otherwise = estanRelacionadosIndirectamente relacionSimplificada u1 u2
+                                        where
+                                            relacionSimplificada = simplificarRelacionesDeUsuario r u1
+
+simplificarRelacionesDeUsuario :: [Relacion] -> Usuario -> [Relacion]
+simplificarRelacionesDeUsuario r u = eliminarRelacionesMismoUsuario (reemplazarConUsuarioAUsuario (relacionNormalizada) u (primerRelacionadoDeUsuario relacionNormalizada u))
+                                     where relacionNormalizada = ponerSiemprePrimeroAUsuario (eliminarRelacionesMismoUsuario r) u
+
+sigueHabiendoUsuarioOrigen :: [Relacion] -> Usuario -> Bool
+sigueHabiendoUsuarioOrigen [r] u = (fst r == u) || (snd r == u)
+sigueHabiendoUsuarioOrigen (r:rs) u = sigueHabiendoUsuarioOrigen [r] u || sigueHabiendoUsuarioOrigen rs u
+
+seEncontroRelacion :: [Relacion] -> Usuario -> Usuario -> Bool
+seEncontroRelacion [r] u1 u2 = ((fst r == u1) && (snd r == u2)) || ((fst r == u2) && (snd r == u1))
+seEncontroRelacion (r:rs) u1 u2 = seEncontroRelacion [r] u1 u2 || seEncontroRelacion rs u1 u2
+
+reemplazarConUsuarioAUsuario :: [Relacion] -> Usuario -> Usuario -> [Relacion]
+reemplazarConUsuarioAUsuario [r] u1 u2  | fst r == u2 = [(u1, snd r)]
+                                        | snd r == u2 = [(fst r, u1)]
+                                        | otherwise = [r]
+reemplazarConUsuarioAUsuario (r:rs) u1 u2   = (head (reemplazarConUsuarioAUsuario [r] u1 u2)) : (reemplazarConUsuarioAUsuario rs u1 u2 )
+
+ponerSiemprePrimeroAUsuario :: [Relacion] -> Usuario -> [Relacion]
+ponerSiemprePrimeroAUsuario [r] u   | snd r == u = [(snd r, fst r)]
+                                    | otherwise = [r]
+ponerSiemprePrimeroAUsuario (r:rs) u = (head (ponerSiemprePrimeroAUsuario [r] u)) : (ponerSiemprePrimeroAUsuario rs u)
+
+primerRelacionadoDeUsuario :: [Relacion] -> Usuario -> Usuario
+primerRelacionadoDeUsuario [r] u = snd r
+primerRelacionadoDeUsuario (r:rs) u | fst r == u = snd r
+                                    | otherwise = primerRelacionadoDeUsuario rs u
+
+eliminarRelacionesMismoUsuario :: [Relacion] -> [Relacion]
+eliminarRelacionesMismoUsuario [] = []
+eliminarRelacionesMismoUsuario (r:rs)   | fst r == snd r = eliminarRelacionesMismoUsuario rs
+                                        | otherwise = r : eliminarRelacionesMismoUsuario rs
 
 pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece _ [] = False
