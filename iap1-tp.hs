@@ -78,6 +78,24 @@ pertenece _ [] = False
 pertenece x (y:ys)  | (x == y) || (pertenece x ys) = True
                     | otherwise = False
 
+usuariosValidos :: [Usuario] -> Bool
+usuariosValidos [u] = usuarioValido u
+usuariosValidos (u:us) = usuarioValido u && noHayIdsRepetidos (u:us) && usuariosValidos us
+
+usuarioValido :: Usuario -> Bool
+usuarioValido u = (idDeUsuario u) > 0 && (longitud (nombreDeUsuario u)) > 0
+
+longitud :: [t] -> Int
+longitud [] = 0
+longitud (_:xs) = 1 + longitud xs
+
+noHayIdsRepetidos :: [Usuario] -> Bool
+noHayIdsRepetidos us = sinRepetidos (idsDeUsuarios us)
+
+idsDeUsuarios :: [Usuario] -> [Integer]
+idsDeUsuarios [u] = [idDeUsuario u]
+idsDeUsuarios (u:us) = (idDeUsuario u) : idsDeUsuarios us
+
 cadenaDeAmigos :: [Usuario] -> RedSocial -> Bool
 cadenaDeAmigos [] r = True
 cadenaDeAmigos [x] r = True
