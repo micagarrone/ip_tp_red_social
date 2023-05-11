@@ -144,6 +144,9 @@ relacionesAsimetricas :: [Relacion] -> Bool
 relacionesAsimetricas [r] = True
 relacionesAsimetricas (r:rs)  = not (pertenece (snd r, fst r) rs) && relacionesAsimetricas rs
 
+noHayRelacionesRepetidas :: [Relacion] -> Bool
+noHayRelacionesRepetidas r = sinRepetidos r && relacionesAsimetricas r
+
 cadenaDeAmigos :: [Usuario] -> RedSocial -> Bool
 cadenaDeAmigos [] r = True
 cadenaDeAmigos [x] r = True
