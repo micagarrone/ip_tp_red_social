@@ -157,6 +157,13 @@ relacionesAsimetricas (r:rs)  = not (pertenece (snd r, fst r) rs) && relacionesA
 noHayRelacionesRepetidas :: [Relacion] -> Bool
 noHayRelacionesRepetidas rs = sinRepetidos rs
 
+usuariosDePublicacionSonUsuariosDeRed :: [Usuario] -> [Publicacion] -> Bool
+usuariosDePublicacionSonUsuariosDeRed us ps = elementosContenidosEn (usuariosDePublicacion ps) us
+
+usuariosDePublicacion :: [Publicacion] -> [Usuario]
+usuariosDePublicacion [] = []
+usuariosDePublicacion (p:ps) = (usuarioDePublicacion p) : (usuariosDePublicacion ps)
+
 usuariosDeLikeDePublicacionSonUsuariosDeRed :: [Usuario] -> [Publicacion] -> Bool
 usuariosDeLikeDePublicacionSonUsuariosDeRed _ [] = True
 usuariosDeLikeDePublicacionSonUsuariosDeRed us (p:ps) = usuariosLikeValidos us (likesDePublicacion p) && usuariosDeLikeDePublicacionSonUsuariosDeRed us ps
@@ -165,11 +172,11 @@ usuariosLikeValidos :: [Usuario] -> [Usuario] -> Bool
 usuariosLikeValidos us usl = elementosContenidosEn usl us
 
 noHayPublicacionesRepetidas :: [Publicacion] -> Bool
-noHayPublicacionesRepetidas ps = sinRepetidos (removerLikes ps)
+noHayPublicacionesRepetidas ps = sinRepetidos (usuariosYMensajesDePublicacion ps)
 
-removerLikes :: [Publicacion] -> [(Usuario, String)]
-removerLikes [] = []
-removerLikes (p:ps) = (usuarioDePublicacion p, mensajeDePublicacion p) : (removerLikes ps)
+usuariosYMensajesDePublicacion :: [Publicacion] -> [(Usuario, String)]
+usuariosYMensajesDePublicacion [] = []
+usuariosYMensajesDePublicacion (p:ps) = (usuarioDePublicacion p, mensajeDePublicacion p) : (usuariosYMensajesDePublicacion ps)
 
 mensajeDePublicacion :: Publicacion -> String
 mensajeDePublicacion (_, s, _) = s
