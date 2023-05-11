@@ -155,7 +155,17 @@ relacionesAsimetricas [r] = True
 relacionesAsimetricas (r:rs)  = not (pertenece (snd r, fst r) rs) && relacionesAsimetricas rs
 
 noHayRelacionesRepetidas :: [Relacion] -> Bool
-noHayRelacionesRepetidas r = sinRepetidos r
+noHayRelacionesRepetidas rs = sinRepetidos rs
+
+noHayPublicacionesRepetidas :: [Publicacion] -> Bool
+noHayPublicacionesRepetidas ps = sinRepetidos (removerLikes ps)
+
+removerLikes :: [Publicacion] -> [(Usuario, String)]
+removerLikes [] = []
+removerLikes (p:ps) = (usuarioDePublicacion p, mensajeDePublicacion p) : (removerLikes ps)
+
+mensajeDePublicacion :: Publicacion -> String
+mensajeDePublicacion (_, s, _) = s
 
 cadenaDeAmigos :: [Usuario] -> RedSocial -> Bool
 cadenaDeAmigos [] r = True
