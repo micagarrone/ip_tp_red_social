@@ -125,6 +125,13 @@ elementosContenidosEn :: (Eq t) => [t] -> [t] -> Bool
 elementosContenidosEn [] t2 = True
 elementosContenidosEn (t1:t1s) t2 = (pertenece t1 t2) && (elementosContenidosEn t1s t2) 
 
+redSocialValida :: RedSocial -> Bool
+redSocialValida red = usuariosValidos us && relacionesValidas us rs && publicacionesValidas us ps
+                    where
+                        us = usuarios red
+                        rs = relaciones red
+                        ps = publicaciones red
+
 usuariosValidos :: [Usuario] -> Bool
 usuariosValidos [u] = usuarioValido u
 usuariosValidos (u:us) = usuarioValido u && noHayIdsRepetidos (u:us) && usuariosValidos us
