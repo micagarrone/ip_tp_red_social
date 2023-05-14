@@ -5,6 +5,8 @@ main = runTestTT tests
 
 tests = test [
     " nombresDeUsuarios 1" ~: (nombresDeUsuarios redA) ~?= ["Juan","Natalia","Pedro","Mariela"],
+    
+    " nombresDeUsuarios 2" ~: (nombresDeUsuarios redB) ~?= ["Juan","Natalia","Pedro","Natalia"],
 
     " amigosDe 1" ~: (amigosDe redA usuario1) ~?= [usuario2, usuario4],
 

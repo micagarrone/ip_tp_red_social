@@ -1,3 +1,5 @@
+module Solucion where
+
 -- Nombre de Grupo: Empanada4Quesos
 -- Integrante 1: Micaela Valeria Garrone, micaelagarrone@gmail.com, 860/23
 -- Integrante 2: Valeria Andreina Simoza Sanchez, vsimoza.vs@gmail.com, 1027/22
@@ -35,7 +37,11 @@ likesDePublicacion (_, _, us) = us
 -- Ejercicios
 
 nombresDeUsuarios :: RedSocial -> [String]
-nombresDeUsuarios = undefined
+nombresDeUsuarios red = proyectarNombres (usuarios red)
+
+proyectarNombres :: [Usuario] -> [String]
+proyectarNombres [] = []
+proyectarNombres (u:us) = (nombreDeUsuario u) : (proyectarNombres us)
 
 -- describir qué hace la función: .....
 amigosDe :: RedSocial -> Usuario -> [Usuario]
