@@ -73,7 +73,18 @@ lesGustanLasMismasPublicaciones r u1 u2 = mismosElementos (publicacionesQueLeGus
 
 -- describir qué hace la función: .....
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
-tieneUnSeguidorFiel = undefined
+tieneUnSeguidorFiel red u = (longitud (publicacionesDe red u) > 0) && (tieneUnSeguidorFielEnListaCandidatos red u candidatosSeguidorFiel)
+                            where
+                                candidatosSeguidorFiel = removerElemento (usuarios red) u
+
+removerElemento :: (Eq t) => [t] -> t -> [t]
+removerElemento [] _ = []
+removerElemento (l:ls) e    | l == e = removerElemento ls e
+                            | otherwise = l : (removerElemento ls e)
+
+tieneUnSeguidorFielEnListaCandidatos :: RedSocial -> Usuario -> [Usuario] -> Bool
+tieneUnSeguidorFielEnListaCandidatos red u [u2] = elementosContenidosEn (publicacionesDe red u) (publicacionesQueLeGustanA red u2)
+tieneUnSeguidorFielEnListaCandidatos red u (u2:u2s) = tieneUnSeguidorFielEnListaCandidatos red u [u2] || tieneUnSeguidorFielEnListaCandidatos red u u2s
 
 -- describir qué hace la función: .....
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
