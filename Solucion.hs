@@ -55,7 +55,7 @@ amigosDeEnListaRelaciones (r:rs) u  | fst r == u && snd r /= u = u : (amigosDeEn
 
 -- describir qué hace la función: .....
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
-cantidadDeAmigos = undefined
+cantidadDeAmigos red u = longitud (amigosDe red u)
 
 -- describir qué hace la función: .....
 usuarioConMasAmigos :: RedSocial -> Usuario
