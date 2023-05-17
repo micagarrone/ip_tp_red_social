@@ -57,7 +57,11 @@ usuarioConMasAmigos = undefined
 
 -- describir qué hace la función: .....
 estaRobertoCarlos :: RedSocial -> Bool
-estaRobertoCarlos = undefined
+estaRobertoCarlos red = estaRobertoCarlosEnListaUsuarios red (usuarios red)
+
+estaRobertoCarlosEnListaUsuarios :: RedSocial -> [Usuario] -> Bool
+estaRobertoCarlosEnListaUsuarios red [] = False
+estaRobertoCarlosEnListaUsuarios red (u:us) = (cantidadDeAmigos red u > 10) || (estaRobertoCarlosEnListaUsuarios red us)
 
 -- describir qué hace la función: .....
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
