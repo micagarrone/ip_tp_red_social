@@ -61,7 +61,12 @@ estaRobertoCarlos = undefined
 
 -- describir qué hace la función: .....
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
-publicacionesDe = undefined
+publicacionesDe red u = publicacionesDeUsuarioEnListaPublicaciones (publicaciones red) u
+
+publicacionesDeUsuarioEnListaPublicaciones :: [Publicacion] -> Usuario -> [Publicacion]
+publicacionesDeUsuarioEnListaPublicaciones [] _ = []
+publicacionesDeUsuarioEnListaPublicaciones (p:ps) u | usuarioDePublicacion p == u = p : (publicacionesDeUsuarioEnListaPublicaciones ps u)
+                                                    | otherwise = publicacionesDeUsuarioEnListaPublicaciones ps u
 
 -- describir qué hace la función: .....
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
