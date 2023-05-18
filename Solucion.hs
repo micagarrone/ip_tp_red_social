@@ -37,24 +37,25 @@ likesDePublicacion (_, _, us) = us
 -- Ejercicios
 
 --Ejercicio 1:
---Dada una red social válida, devuelve una lista con los nombres de cada usuario, sin repetidos.
+--Dada una red social válida, devuelve una lista con los nombres de cada usuario, sin repetidos
 nombresDeUsuarios :: RedSocial -> [String]
 nombresDeUsuarios red = proyectarNombres (usuarios red)
 
---Dada una lista de usuarios, devuelve una lista con el nombre de cada uno
+--Dada una lista de usuarios, devuelve una lista con el nombre de cada uno, sin repetidos
 proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
-proyectarNombres (u:us) | pertenece (nombreDeUsuario u) (proyectarNombres us) = proyectarNombres us
-                        | otherwise = (nombreDeUsuario u) : proyectarNombres us
+proyectarNombres (u:us) | not (pertenece (nombreDeUsuario u) (proyectarNombres us)) = (nombreDeUsuario u) : (proyectarNombres us)
+                        | otherwise = proyectarNombres us
 
--- describir qué hace la función: .....
+--Ejercicio 2: 
+--Dada una red social válida y un usuario válido perteneciente a esta, devuelve una lista de todos los usuarios  que se relacionan con él dentro de la red.
 amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe red u = amigosDeEnListaRelaciones (relaciones red) u
 
 amigosDeEnListaRelaciones :: [Relacion] -> Usuario -> [Usuario]
 amigosDeEnListaRelaciones [] _ = []
-amigosDeEnListaRelaciones (r:rs) u  | fst r == u && snd r /= u = snd r : (amigosDeEnListaRelaciones rs u)
-                                    | snd r == u && fst r /= u = fst r : (amigosDeEnListaRelaciones rs u)
+amigosDeEnListaRelaciones (r:rs) u  | fst r == u = snd r : (amigosDeEnListaRelaciones rs u) --No hace falta chequear repetidos, porque en una red social válida no hay relaciones repetidas ni usuarios auto-relacionados.
+                                    | snd r == u = fst r : (amigosDeEnListaRelaciones rs u)
                                     | otherwise = amigosDeEnListaRelaciones rs u
 
 -- describir qué hace la función: .....
