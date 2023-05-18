@@ -36,12 +36,16 @@ likesDePublicacion (_, _, us) = us
 
 -- Ejercicios
 
+--Ejercicio 1:
+--Dada una red social válida, devuelve una lista con los nombres de cada usuario, sin repetidos.
 nombresDeUsuarios :: RedSocial -> [String]
 nombresDeUsuarios red = proyectarNombres (usuarios red)
 
+--Dada una lista de usuarios, devuelve una lista con el nombre de cada uno
 proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
-proyectarNombres (u:us) = (nombreDeUsuario u) : (proyectarNombres us)
+proyectarNombres (u:us) | pertenece (nombreDeUsuario u) (proyectarNombres us) = proyectarNombres us
+                        | otherwise = (nombreDeUsuario u) : proyectarNombres us
 
 -- describir qué hace la función: .....
 amigosDe :: RedSocial -> Usuario -> [Usuario]
