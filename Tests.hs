@@ -3,31 +3,49 @@ module Tests where
 import Test.HUnit
 import Solucion
 
-main = runTestTT tests
+main = runTestTT todosLosTest
+todosLosTest = test [testsuite1, testsuite2, testsuite3, testsuite4, testsuite5, testsuite6, testsuite7, testsuite8, testsuite9, testsuite10]
 
-tests = test [
+testsuite1 = test [
     " nombresDeUsuarios 1" ~: (nombresDeUsuarios redA) ~?= ["Juan","Natalia","Pedro","Mariela"],
-    
-    " nombresDeUsuarios 2" ~: (nombresDeUsuarios redB) ~?= ["Juan","Natalia","Pedro","Natalia"],
+    " nombresDeUsuarios 2" ~: (nombresDeUsuarios redB) ~?= ["Juan","Natalia","Pedro","Natalia"]
+    ]   
 
-    " amigosDe 1" ~: (amigosDe redA usuario1) ~?= [usuario2, usuario4],
+testsuite2 = test [
+    " amigosDe 1" ~: (amigosDe redA usuario1) ~?= [usuario2, usuario4]
+    ]
 
-    " cantidadDeAmigos 1" ~: (cantidadDeAmigos redA usuario1) ~?= 2,
+testsuite3 = test [
+    " cantidadDeAmigos 1" ~: (cantidadDeAmigos redA usuario1) ~?= 2
+    ]
 
-    " usuarioConMasAmigos 1" ~: expectAny (usuarioConMasAmigos redA) [usuario2, usuario4],
+testsuite4 = test [
+    " usuarioConMasAmigos 1" ~: expectAny (usuarioConMasAmigos redA) [usuario2, usuario4]
+    ]
 
-    " estaRobertoCarlos 1" ~: (estaRobertoCarlos redA) ~?= False,
+testsuite5 = test [
+    " estaRobertoCarlos 1" ~: (estaRobertoCarlos redA) ~?= False
+    ]
 
-    " publicacionesDe 1" ~: (publicacionesDe redA usuario2) ~?= [publicacion2_1, publicacion2_2],
+testsuite6 = test [
+    " publicacionesDe 1" ~: (publicacionesDe redA usuario2) ~?= [publicacion2_1, publicacion2_2]
+    ]
 
-    " publicacionesQueLeGustanA 1" ~: (publicacionesQueLeGustanA redA usuario1) ~?= [publicacion2_2, publicacion4_1],
+testsuite7 = test [
+    " publicacionesQueLeGustanA 1" ~: (publicacionesQueLeGustanA redA usuario1) ~?= [publicacion2_2, publicacion4_1]
+    ]
 
-    " lesGustanLasMismasPublicaciones 2" ~: (lesGustanLasMismasPublicaciones redB usuario1 usuario3) ~?= True,
+testsuite8 = test [
+    " lesGustanLasMismasPublicaciones 2" ~: (lesGustanLasMismasPublicaciones redB usuario1 usuario3) ~?= True
+    ]
 
-    " tieneUnSeguidorFiel 1" ~: (tieneUnSeguidorFiel redA usuario1) ~?= True,
+testsuite9 = test [
+    " tieneUnSeguidorFiel 1" ~: (tieneUnSeguidorFiel redA usuario1) ~?= True
+    ]
 
+testsuite10 = test [
     " existeSecuenciaDeAmigos 1" ~: (existeSecuenciaDeAmigos redA usuario1 usuario3) ~?= True
- ]
+    ]
 
 expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
 
