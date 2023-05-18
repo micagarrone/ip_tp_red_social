@@ -49,8 +49,8 @@ amigosDe red u = amigosDeEnListaRelaciones (relaciones red) u
 
 amigosDeEnListaRelaciones :: [Relacion] -> Usuario -> [Usuario]
 amigosDeEnListaRelaciones [] _ = []
-amigosDeEnListaRelaciones (r:rs) u  | fst r == u && snd r /= u = u : (amigosDeEnListaRelaciones rs u)
-                                    | snd r == u && fst r /= u = u : (amigosDeEnListaRelaciones rs u)
+amigosDeEnListaRelaciones (r:rs) u  | fst r == u && snd r /= u = snd r : (amigosDeEnListaRelaciones rs u)
+                                    | snd r == u && fst r /= u = fst r : (amigosDeEnListaRelaciones rs u)
                                     | otherwise = amigosDeEnListaRelaciones rs u
 
 -- describir qué hace la función: .....
