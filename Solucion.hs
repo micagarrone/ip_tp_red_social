@@ -57,6 +57,10 @@ amigosDeEnListaRelaciones (r:rs) u  | fst r == u && snd r /= u = snd r : (amigos
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos red u = longitud (amigosDe red u)
 
+longitud :: [t] -> Int
+longitud [] = 0
+longitud (_:xs) = 1 + longitud xs
+
 -- describir qué hace la función: .....
 usuarioConMasAmigos :: RedSocial -> Usuario
 usuarioConMasAmigos red = usuarioConMasAmigosEnListaUsuarios red (usuarios red)
@@ -92,9 +96,21 @@ publicacionesQueLeGustanAUsuarioEnListaPublicaciones [] _ = []
 publicacionesQueLeGustanAUsuarioEnListaPublicaciones (p:ps) u   | pertenece u (likesDePublicacion p) = p : (publicacionesQueLeGustanAUsuarioEnListaPublicaciones ps u) 
                                                                 | otherwise = publicacionesQueLeGustanAUsuarioEnListaPublicaciones ps u
 
+pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece _ [] = False
+pertenece x (y:ys)  | (x == y) || (pertenece x ys) = True
+                    | otherwise = False
+
 -- describir qué hace la función: .....
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones r u1 u2 = mismosElementos (publicacionesQueLeGustanA r u1 ) (publicacionesQueLeGustanA r u2)
+
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+mismosElementos t1 t2 = (longitud t1 == longitud t2) && (elementosContenidosEn t1 t2) && (elementosContenidosEn t2 t1)
+
+elementosContenidosEn :: (Eq t) => [t] -> [t] -> Bool
+elementosContenidosEn [] t2 = True
+elementosContenidosEn (t1:t1s) t2 = (pertenece t1 t2) && (elementosContenidosEn t1s t2)
 
 -- describir qué hace la función: .....
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
@@ -155,18 +171,5 @@ eliminarRelacionesMismoUsuario [] = []
 eliminarRelacionesMismoUsuario (r:rs)   | fst r == snd r = eliminarRelacionesMismoUsuario rs
                                         | otherwise = r : eliminarRelacionesMismoUsuario rs
 
-pertenece :: (Eq t) => t -> [t] -> Bool
-pertenece _ [] = False
-pertenece x (y:ys)  | (x == y) || (pertenece x ys) = True
-                    | otherwise = False
 
-mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos t1 t2 = (longitud t1 == longitud t2) && (elementosContenidosEn t1 t2) && (elementosContenidosEn t2 t1)
 
-elementosContenidosEn :: (Eq t) => [t] -> [t] -> Bool
-elementosContenidosEn [] t2 = True
-elementosContenidosEn (t1:t1s) t2 = (pertenece t1 t2) && (elementosContenidosEn t1s t2) 
-
-longitud :: [t] -> Int
-longitud [] = 0
-longitud (_:xs) = 1 + longitud xs
