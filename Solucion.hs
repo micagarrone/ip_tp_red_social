@@ -170,6 +170,3 @@ eliminarRelacionesMismoUsuario :: [Relacion] -> [Relacion]
 eliminarRelacionesMismoUsuario [] = []
 eliminarRelacionesMismoUsuario (r:rs)   | fst r == snd r = eliminarRelacionesMismoUsuario rs
                                         | otherwise = r : eliminarRelacionesMismoUsuario rs
-
-
-
