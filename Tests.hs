@@ -8,7 +8,7 @@ todosLosTest = test [testsuite1, testsuite2, testsuite3, testsuite4, testsuite5,
 
 testsuite1 = test [
     " nombresDeUsuarios 1" ~: (nombresDeUsuarios redA) ~?= ["Juan","Natalia","Pedro","Mariela"],
-    " nombresDeUsuarios 2" ~: (nombresDeUsuarios redB) ~?= ["Juan","Natalia","Pedro","Natalia"]
+    " nombresDeUsuarios 2" ~: expectAny (nombresDeUsuarios redB) [["Juan","Natalia","Pedro"], ["Juan","Pedro","Natalia"], ["Natalia","Juan","Pedro"], ["Natalia","Pedro","Juan"], ["Pedro","Natalia","Juan"], ["Pedro","Juan","Natalia"]]
     ]   
 
 testsuite2 = test [
