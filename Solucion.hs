@@ -47,6 +47,11 @@ proyectarNombres [] = []
 proyectarNombres (u:us) | not (pertenece (nombreDeUsuario u) (proyectarNombres us)) = (nombreDeUsuario u) : (proyectarNombres us)
                         | otherwise = proyectarNombres us
 
+pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece _ [] = False
+pertenece x (y:ys)  | (x == y) || (pertenece x ys) = True
+                    | otherwise = False
+
 --Ejercicio 2: 
 --Dada una red social válida y un usuario válido perteneciente a esta, devuelve una lista de todos los usuarios  que se relacionan con él dentro de la red.
 amigosDe :: RedSocial -> Usuario -> [Usuario]
@@ -58,7 +63,8 @@ amigosDeEnListaRelaciones (r:rs) u  | fst r == u = snd r : (amigosDeEnListaRelac
                                     | snd r == u = fst r : (amigosDeEnListaRelaciones rs u)
                                     | otherwise = amigosDeEnListaRelaciones rs u
 
--- describir qué hace la función: .....
+--Ejercicio 3:
+--Dada una red social válida y un usuario válido perteneciente a esta, devuelve la cantidad de usuarios válidos dentro de la red que se relacionan con él.
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos red u = longitud (amigosDe red u)
 
@@ -66,16 +72,18 @@ longitud :: [t] -> Int
 longitud [] = 0
 longitud (_:xs) = 1 + longitud xs
 
--- describir qué hace la función: .....
+--Ejercicio 4:
+--Dada una red social válida, devuelve el usuario dentro de esta que tenga la mayor cantidad de amigos. En caso de empate entre varios usuarios, devuelve alguno de ellos.
 usuarioConMasAmigos :: RedSocial -> Usuario
 usuarioConMasAmigos red = usuarioConMasAmigosEnListaUsuarios red (usuarios red)
 
 usuarioConMasAmigosEnListaUsuarios :: RedSocial -> [Usuario] -> Usuario
 usuarioConMasAmigosEnListaUsuarios red [u] = u
 usuarioConMasAmigosEnListaUsuarios red (u:us)   | (cantidadDeAmigos red u) > (cantidadDeAmigos red (usuarioConMasAmigosEnListaUsuarios red us)) = u
-                    | otherwise = usuarioConMasAmigosEnListaUsuarios red us
+                                                | otherwise = usuarioConMasAmigosEnListaUsuarios red us
 
--- describir qué hace la función: .....
+--Ejercicio 5:
+--Dada una red social válida, devuelve True si y solo si dentro de ella hay un usuario con más de diez amigos.
 estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos red = estaRobertoCarlosEnListaUsuarios red (usuarios red)
 
@@ -83,7 +91,8 @@ estaRobertoCarlosEnListaUsuarios :: RedSocial -> [Usuario] -> Bool
 estaRobertoCarlosEnListaUsuarios red [] = False
 estaRobertoCarlosEnListaUsuarios red (u:us) = (cantidadDeAmigos red u > 10) || (estaRobertoCarlosEnListaUsuarios red us)
 
--- describir qué hace la función: .....
+--Ejercicio 6:
+--Dada una red social válida y un usuario válido perteneciente a esta, devuelve una lista con todas las publicaciones válidas que haya hecho dentro de la red
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe red u = publicacionesDeUsuarioEnListaPublicaciones (publicaciones red) u
 
@@ -100,11 +109,6 @@ publicacionesQueLeGustanAUsuarioEnListaPublicaciones :: [Publicacion] -> Usuario
 publicacionesQueLeGustanAUsuarioEnListaPublicaciones [] _ = []
 publicacionesQueLeGustanAUsuarioEnListaPublicaciones (p:ps) u   | pertenece u (likesDePublicacion p) = p : (publicacionesQueLeGustanAUsuarioEnListaPublicaciones ps u) 
                                                                 | otherwise = publicacionesQueLeGustanAUsuarioEnListaPublicaciones ps u
-
-pertenece :: (Eq t) => t -> [t] -> Bool
-pertenece _ [] = False
-pertenece x (y:ys)  | (x == y) || (pertenece x ys) = True
-                    | otherwise = False
 
 -- describir qué hace la función: .....
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
