@@ -59,7 +59,12 @@ cantidadDeAmigos red u = longitud (amigosDe red u)
 
 -- describir qué hace la función: .....
 usuarioConMasAmigos :: RedSocial -> Usuario
-usuarioConMasAmigos = undefined
+usuarioConMasAmigos red = usuarioConMasAmigosEnListaUsuarios red (usuarios red)
+
+usuarioConMasAmigosEnListaUsuarios :: RedSocial -> [Usuario] -> Usuario
+usuarioConMasAmigosEnListaUsuarios red [u] = u
+usuarioConMasAmigosEnListaUsuarios red (u:us)   | (cantidadDeAmigos red u) > (cantidadDeAmigos red (usuarioConMasAmigosEnListaUsuarios red us)) = u
+                    | otherwise = usuarioConMasAmigosEnListaUsuarios red us
 
 -- describir qué hace la función: .....
 estaRobertoCarlos :: RedSocial -> Bool
