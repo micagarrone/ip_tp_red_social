@@ -7,12 +7,12 @@ main = runTestTT todosLosTest
 todosLosTest = test [testsuite1, testsuite2, testsuite3, testsuite4, testsuite5, testsuite6, testsuite7, testsuite8, testsuite9, testsuite10]
 
 testsuite1 = test [
-    " nombresDeUsuarios 1" ~: esPermutacion (nombresDeUsuarios redA) ["Juan","Natalia","Pedro","Mariela"],
-    " nombresDeUsuarios 2" ~: (nombresDeUsuarios redB) ~?= ["Juan","Pedro","Natalia"]  
+    " nombresDeUsuarios sin nombres repetidos" ~: esPermutacion (nombresDeUsuarios redA) ["Juan","Natalia","Pedro","Mariela"],
+    " nombresDeUsuarios con nombres repetidos" ~: esPermutacion (nombresDeUsuarios redB) ["Juan","Pedro","Natalia"]  
     ]   
 
 testsuite2 = test [
-    " amigosDe 1" ~: (amigosDe redA usuario1) ~?= [usuario2, usuario4]
+    " amigosDe 1" ~: esPermutacion (amigosDe redA usuario1) [usuario2, usuario4]
     ]
 
 testsuite3 = test [
@@ -28,11 +28,11 @@ testsuite5 = test [
     ]
 
 testsuite6 = test [
-    " publicacionesDe 1" ~: (publicacionesDe redA usuario2) ~?= [publicacion2_1, publicacion2_2]
+    " publicacionesDe 1" ~: esPermutacion (publicacionesDe redA usuario2) [publicacion2_1, publicacion2_2]
     ]
 
 testsuite7 = test [
-    " publicacionesQueLeGustanA 1" ~: (publicacionesQueLeGustanA redA usuario1) ~?= [publicacion2_2, publicacion4_1]
+    " publicacionesQueLeGustanA 1" ~: esPermutacion (publicacionesQueLeGustanA redA usuario1) [publicacion2_2, publicacion4_1]
     ]
 
 testsuite8 = test [
@@ -64,6 +64,7 @@ usuario7 = (7, "Spiderman")
 usuario8 = (8, "Goku")
 usuario9 = (9, "Pikachu")
 usuario10 = (10, "Adolfo")
+usuario11 = (11, "Juan")
 
 relacion1_2 = (usuario1, usuario2)
 relacion1_3 = (usuario1, usuario3)
@@ -104,7 +105,7 @@ relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
 publicacionesA = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
 redA = (usuariosA, relacionesA, publicacionesA)
 
-usuariosB = [usuario1, usuario2, usuario3, usuario5]
+usuariosB = [usuario1, usuario2, usuario3, usuario5, usuario11]
 relacionesB = [relacion1_2, relacion2_3]
 publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
 redB = (usuariosB, relacionesB, publicacionesB)
