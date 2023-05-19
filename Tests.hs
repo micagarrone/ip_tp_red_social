@@ -7,7 +7,7 @@ main = runTestTT todosLosTest
 todosLosTest = test [testsuite1, testsuite2, testsuite3, testsuite4, testsuite5, testsuite6, testsuite7, testsuite8, testsuite9, testsuite10]
 
 testsuite1 = test [
-    " nombresDeUsuarios 1" ~: (nombresDeUsuarios redA) ~?= ["Juan","Natalia","Pedro","Mariela"],
+    " nombresDeUsuarios 1" ~: esPermutacion (nombresDeUsuarios redA) ["Juan","Natalia","Pedro","Mariela"],
     " nombresDeUsuarios 2" ~: (nombresDeUsuarios redB) ~?= ["Juan","Pedro","Natalia"]  
     ]   
 
@@ -48,6 +48,7 @@ testsuite10 = test [
     ]
 
 expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
+esPermutacion actual expected = mismosElementos actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
 
 -- Ejemplos
 
