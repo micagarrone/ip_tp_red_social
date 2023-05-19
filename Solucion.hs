@@ -8,10 +8,10 @@ module Solucion where
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
-type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicacion, likes)
+type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicación, likes)
 type RedSocial = ([Usuario], [Relacion], [Publicacion])
 
--- Funciones basicas
+-- Funciones básicas
 
 usuarios :: RedSocial -> [Usuario]
 usuarios (us, _, _) = us
@@ -101,7 +101,8 @@ publicacionesDeUsuarioEnListaPublicaciones [] _ = []
 publicacionesDeUsuarioEnListaPublicaciones (p:ps) u | usuarioDePublicacion p == u = p : (publicacionesDeUsuarioEnListaPublicaciones ps u)
                                                     | otherwise = publicacionesDeUsuarioEnListaPublicaciones ps u
 
--- describir qué hace la función: .....
+--Ejercicio 7:
+--Dada una red social válida y un usuario válido perteneciente a esta, devuelve una lista con todas las publicaciones dentro de la red a las cuales les haya dado like
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
 publicacionesQueLeGustanA red u = publicacionesQueLeGustanAUsuarioEnListaPublicaciones (publicaciones red) u
 
@@ -110,7 +111,8 @@ publicacionesQueLeGustanAUsuarioEnListaPublicaciones [] _ = []
 publicacionesQueLeGustanAUsuarioEnListaPublicaciones (p:ps) u   | pertenece u (likesDePublicacion p) = p : (publicacionesQueLeGustanAUsuarioEnListaPublicaciones ps u) 
                                                                 | otherwise = publicacionesQueLeGustanAUsuarioEnListaPublicaciones ps u
 
--- describir qué hace la función: .....
+--Ejercicio 8:
+--Dada una red social válida y dos usuarios válidos pertenecientes a esta, devuelve True si y solo si a ambos usuarios les gustan exactamente las mismas publicaciones de la red
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones r u1 u2 = mismosElementos (publicacionesQueLeGustanA r u1 ) (publicacionesQueLeGustanA r u2)
 
@@ -121,11 +123,11 @@ elementosContenidosEn :: (Eq t) => [t] -> [t] -> Bool
 elementosContenidosEn [] t2 = True
 elementosContenidosEn (t1:t1s) t2 = (pertenece t1 t2) && (elementosContenidosEn t1s t2)
 
--- describir qué hace la función: .....
+--Ejercicio 9:
+--Dada una red social válida y un usuario válido perteneciente a esta, devuelve True si y solo si existe algún otro usuario válido dentro de la red que haya dado like a todas las publicaciones de la red del usuario original
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
 tieneUnSeguidorFiel red u = (longitud (publicacionesDe red u) > 0) && (tieneUnSeguidorFielEnListaCandidatos red u candidatosSeguidorFiel)
-                            where
-                                candidatosSeguidorFiel = removerElemento (usuarios red) u
+                            where candidatosSeguidorFiel = removerElemento (usuarios red) u
 
 removerElemento :: (Eq t) => [t] -> t -> [t]
 removerElemento [] _ = []
@@ -136,7 +138,8 @@ tieneUnSeguidorFielEnListaCandidatos :: RedSocial -> Usuario -> [Usuario] -> Boo
 tieneUnSeguidorFielEnListaCandidatos red u [u2] = elementosContenidosEn (publicacionesDe red u) (publicacionesQueLeGustanA red u2)
 tieneUnSeguidorFielEnListaCandidatos red u (u2:u2s) = tieneUnSeguidorFielEnListaCandidatos red u [u2] || tieneUnSeguidorFielEnListaCandidatos red u u2s
 
--- describir qué hace la función: .....
+--Ejercicio 10:
+--Dada una red social válida y dos usuarios A y Z válidos pertenecientes a esta, devuelve True si y solo si existe una cadena de amigos que los una. Es decir, si y solo si A es amigo de B, y B de C, y... y Y de Z.
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red u1 u2 = estanRelacionadosIndirectamente (relaciones red) u1 u2
 
@@ -144,9 +147,9 @@ estanRelacionadosIndirectamente :: [Relacion] -> Usuario -> Usuario -> Bool
 estanRelacionadosIndirectamente r u1 u2 | (not (sigueHabiendoUsuarioOrigen r u1)) = False
                                         | seEncontroRelacion r u1 u2 = True
                                         | otherwise = estanRelacionadosIndirectamente relacionSimplificada u1 u2
-                                        where
-                                            relacionSimplificada = simplificarRelacionesDeUsuario r u1
+                                        where relacionSimplificada = simplificarRelacionesDeUsuario r u1
 
+--"El amigo de mi amigo es mi amigo"
 simplificarRelacionesDeUsuario :: [Relacion] -> Usuario -> [Relacion]
 simplificarRelacionesDeUsuario r u = eliminarRelacionesMismoUsuario (reemplazarConUsuarioAUsuario (relacionNormalizada) u (primerRelacionadoDeUsuario relacionNormalizada u))
                                      where relacionNormalizada = ponerSiemprePrimeroAUsuario (eliminarRelacionesMismoUsuario r) u
