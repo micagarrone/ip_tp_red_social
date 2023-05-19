@@ -48,7 +48,9 @@ testsuite10 = test [
     ]
 
 expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
-esPermutacion actual expected = mismosElementos actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
+
+--Al usarse con listas que no tienen repetidos, la especificación de "mismosElementos" funciona igual que chequear si una lista es permutación de otra
+esPermutacion actual expected = mismosElementos actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual) 
 
 -- Ejemplos
 
