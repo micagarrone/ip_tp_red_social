@@ -13,12 +13,14 @@ testsuite1 = test [
     ]   
 
 testsuite2 = test [
-    " amigosDe alguien social" ~: esPermutacion (amigosDe redA usuario1) [usuario2, usuario4],
+    " amigosDe alguien social" ~: esPermutacion (amigosDe redA usuario2) [usuario1, usuario4, usuario3],
     " amigosDe alguien solitario"  ~: (amigosDe redA usuario999) ~?= [] 
     ]
 
 testsuite3 = test [
-    " cantidadDeAmigos 1" ~: (cantidadDeAmigos redA usuario1) ~?= 2
+    " cantidadDeAmigos alguien social" ~: (cantidadDeAmigos redA usuario1) ~?= 2,
+    " cantidadDeAmigos alguien solitario" ~: (cantidadDeAmigos redR usuario999) ~?= 0,
+    " cantidadDeAmigos alguien MUY social " ~: (cantidadDeAmigos redR usuarioR) ~?= 11
     ]
 
 testsuite4 = test [
@@ -26,7 +28,8 @@ testsuite4 = test [
     ]
 
 testsuite5 = test [
-    " estaRobertoCarlos 1" ~: (estaRobertoCarlos redA) ~?= False
+    " estaRobertoCarlos pocos amigos" ~: (estaRobertoCarlos redA) ~?= False,
+    " estaRobertoCarlos 11amigos"  ~: (estaRobertoCarlos redR) ~?= True
     ]
 
 testsuite6 = test [
@@ -69,6 +72,7 @@ usuario10 = (10, "Adolfo")
 usuario11 = (11, "Juan")
 usuario12 = (12, "Maximo Cozzeti")
 usuario999 = (999, "Bobby Vinton")
+usuarioR = (10000, "ROBERTO")
 
 relacion1_2 = (usuario1, usuario2)
 relacion1_3 = (usuario1, usuario3)
@@ -86,9 +90,21 @@ relacion8_9 = (usuario9, usuario8)
 relacion7_9 = (usuario7, usuario9)
 relacion10_9 = (usuario10, usuario9)
 
+relacionR_1 = (usuarioR, usuario1)
+relacionR_2 = (usuarioR, usuario2)
+relacionR_3 = (usuarioR, usuario3)
+relacionR_4 = (usuarioR, usuario4)
+relacionR_5 = (usuarioR, usuario5)
+relacionR_6 = (usuarioR, usuario6)
+relacion7_R = (usuario7, usuarioR)
+relacion8_R = (usuario8, usuarioR)
+relacion9_R = (usuario9, usuarioR)
+relacion10_R = (usuario10, usuarioR)
+relacion11_R = (usuario11, usuarioR)
+
 publicacion1_1 = (usuario1, "S", [usuario2, usuario4])
-publicacion1_2 = (usuario1, "P", [usuario5])
-publicacion1_3 = (usuario1, "A", [usuario2, usuario5])
+publicacion1_2 = (usuario1, "P", [usuario4])
+publicacion1_3 = (usuario1, "A", [usuario2, usuario4])
 publicacion1_4 = (usuario1, "M", [])
 publicacion1_5 = (usuario1, "X", [usuario4])
 publicacion1_6 = (usuario1, "D", [usuario1])
@@ -106,9 +122,9 @@ publicacion4_2 = (usuario4, "kjjjjjjjjjjjjj", [])
 publicacion4_3 = (usuario4, "un año en la selva hablandole a una camara apagada?", [usuario1, usuario3])
 
 
-usuariosA = [usuario1, usuario2, usuario3, usuario4, usuario6, usuario8, usuario11, usuario999]
+usuariosA = [usuario1, usuario2, usuario3, usuario4]
 relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
-publicacionesA = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion1_4, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
+publicacionesA = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion1_5, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
 redA = (usuariosA, relacionesA, publicacionesA)
 
 usuariosB = [usuario1, usuario2, usuario3, usuario5, usuario11]
@@ -116,8 +132,15 @@ relacionesB = [relacion1_2, relacion2_3]
 publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
 redB = (usuariosB, relacionesB, publicacionesB)
 
+
+
 usuariosVacios = []
 publicacionesVacias = []
 relacionesVacias = []
 
 redVacia = (usuariosVacios, relacionesVacias, publicacionesVacias)
+
+usuariosR = [usuarioR, usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10, usuario11, usuario999]
+relacionesR = [relacionR_1, relacionR_2, relacionR_3, relacionR_4, relacionR_5, relacionR_6, relacion7_R, relacion8_R, relacion9_R, relacion10_R, relacion11_R]
+
+redR = (usuariosR, relacionesR, publicacionesVacias)
