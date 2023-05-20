@@ -20,7 +20,7 @@ testsuite2 = test [
 testsuite3 = test [
     " cantidadDeAmigos alguien social" ~: (cantidadDeAmigos redA usuario1) ~?= 3,
     " cantidadDeAmigos alguien solitario" ~: (cantidadDeAmigos redR usuario999) ~?= 0,
-    " cantidadDeAmigos alguien MUY social " ~: (cantidadDeAmigos redR usuarioR) ~?= 11
+    " cantidadDeAmigos alguien muy social " ~: (cantidadDeAmigos redR usuarioR) ~?= 11
     ]
 
 testsuite4 = test [
@@ -30,12 +30,14 @@ testsuite4 = test [
     ]
 
 testsuite5 = test [
-    " estaRobertoCarlos pocos amigos" ~: (estaRobertoCarlos redA) ~?= False,
-    " estaRobertoCarlos 11amigos"  ~: (estaRobertoCarlos redR) ~?= True
+    " estaRobertoCarlos si nadie tiene más de 10 amigos" ~: (estaRobertoCarlos redA) ~?= False,
+    " estaRobertoCarlos si alguien tiene más de 10 amigos"  ~: (estaRobertoCarlos redR) ~?= True
     ]
 
 testsuite6 = test [
-    " publicacionesDe 1" ~: esPermutacion (publicacionesDe redA usuario2) [publicacion2_1, publicacion2_2]
+    " publicacionesDe de alguien en red A" ~: esPermutacion (publicacionesDe redA usuario3) [publicacion3_1, publicacion3_2],
+    " publicacionesDe de ese mismo alguien en red B" ~: esPermutacion (publicacionesDe redB usuario3) [publicacion3_1, publicacion3_2, publicacion3_3],
+    " publicacionesDe alguien que no publica"  ~: (publicacionesDe redA usuario7)~?= []
     ]
 
 testsuite7 = test [
