@@ -141,7 +141,8 @@ tieneUnSeguidorFielEnListaCandidatos red u (u2:u2s) = tieneUnSeguidorFielEnLista
 --Ejercicio 10:
 --Dada una red social válida y dos usuarios A y Z válidos pertenecientes a esta, devuelve True si y solo si existe una cadena de amigos que los una. Es decir, si y solo si A es amigo de B, y B de C, y... y Y de Z.
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
-existeSecuenciaDeAmigos red u1 u2 = estanRelacionadosIndirectamente (relaciones red) u1 u2
+existeSecuenciaDeAmigos red u1 u2   | u1 == u2 && (cantidadDeAmigos red u1 > 0) = True --Si tiene al menos 1 amigo u3, existe la secuencia [u1, u3, u1]
+                                    | otherwise = estanRelacionadosIndirectamente (relaciones red) u1 u2
 
 estanRelacionadosIndirectamente :: [Relacion] -> Usuario -> Usuario -> Bool
 estanRelacionadosIndirectamente r u1 u2 | (not (sigueHabiendoUsuarioOrigen r u1)) = False

@@ -61,7 +61,12 @@ testsuite9 = test [
     ]
 
 testsuite10 = test [
-    " existeSecuenciaDeAmigos 1" ~: (existeSecuenciaDeAmigos redA usuario1 usuario3) ~?= True
+    " existeSecuenciaDeAmigos entre amigos directos " ~: (existeSecuenciaDeAmigos redZ usuario1 usuario2) ~?= True,
+    " existeSecuenciaDeAmigos cluster de amigos 1" ~: (existeSecuenciaDeAmigos redZ usuario5 usuario11) ~?= True,
+    " existeSecuenciaDeAmigos cluster de amigos 2" ~: (existeSecuenciaDeAmigos redZ usuario4 usuario1) ~?= True,
+    " existeSecuenciaDeAmigos entre clusters separados"  ~: (existeSecuenciaDeAmigos redZ usuario2 usuario8) ~?= False,
+    " existeSecuenciaDeAmigos entre un mismo usuario sin amigos" ~: (existeSecuenciaDeAmigos redZ usuario999 usuario999) ~?= False,
+    " existeSecuenciaDeAmigos entre un mismo usuario con amigos" ~: (existeSecuenciaDeAmigos redZ usuario1 usuario1) ~?= True
     ]
 
 expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
@@ -96,7 +101,9 @@ relacion3_3 = (usuario3, usuario3)
 relacion2_5 = (usuario2, usuario5)
 relacion3_6 = (usuario3, usuario6)
 relacion4_7 = (usuario4, usuario7)
+relacion5_6 = (usuario5, usuario6)
 relacion5_7 = (usuario7, usuario5)
+relacion6_7 = (usuario6, usuario7)
 relacion8_9 = (usuario9, usuario8)
 relacion7_9 = (usuario7, usuario9)
 relacion10_9 = (usuario10, usuario9)
@@ -104,6 +111,7 @@ relacion2_7 = (usuario2, usuario7)
 relacion1_6 = (usuario1, usuario6)
 relacion1_12 = (usuario1, usuario12)
 relacion12_3 = (usuario12, usuario3)
+relacion10_11 = (usuario10, usuario11)
 
 relacionR_1 = (usuarioR, usuario1)
 relacionR_2 = (usuarioR, usuario2)
@@ -169,5 +177,9 @@ usuariosR = [usuarioR, usuario1, usuario2, usuario3, usuario4, usuario5, usuario
 relacionesR = [relacionR_1, relacionR_2, relacionR_3, relacionR_4, relacionR_5, relacionR_6, relacion7_R, relacion8_R, relacion9_R, relacion10_R, relacion11_R, relacion1_2,relacion1_3,relacion1_4]
 
 redR = (usuariosR, relacionesR, publicacionesVacias)
+
+relacionesZ = [relacionR_5, relacion6_7, relacion7_9, relacion8_9, relacion10_9, relacion10_11, relacion1_2,relacion2_4, relacion5_6]
+
+redZ = (usuariosR, relacionesZ, publicacionesVacias)
 
 redLobosSolitarios = (usuariosR, relacionesVacias, publicacionesVacias)
