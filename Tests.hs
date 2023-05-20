@@ -4,13 +4,19 @@ import Test.HUnit
 import Solucion
 
 main = runTestTT todosLosTest
-todosLosTest = test [testsuite1, testsuite2, testsuite3, testsuite4, testsuite5, testsuite6, testsuite7, testsuite8, testsuite9, testsuite10]
+todosLosTest = test [testsuite1a, testsuite1b, testsuite2, testsuite3, testsuite4, testsuite5, testsuite6, testsuite7, testsuite8, testsuite9, testsuite10]
 
-testsuite1 = test [
+testsuite1a = test [
     " nombresDeUsuarios sin nombres repetidos" ~: esPermutacion (nombresDeUsuarios redA) ["Juan","JOJO","PEPSIMAN","Mirtha Legrand", "Spiderman"],
     " nombresDeUsuarios con nombres repetidos" ~: esPermutacion (nombresDeUsuarios redB) ["Juan","PEPSIMAN","JOJO"],
     " nombresDeUsuarios red sin usuarios " ~: (nombresDeUsuarios redVacia) ~?= [] 
-    ]   
+    ]
+
+testsuite1b = test[
+    " proyectarNombres sin repetidos" ~: esPermutacion (proyectarNombres usuariosA) ["Juan","JOJO","PEPSIMAN","Mirtha Legrand", "Spiderman"],
+    " proyectarNombres con repetidos" ~: esPermutacion (proyectarNombres usuariosD) ["Juan","PEPSIMAN","JOJO", "Maximo Cozzeti"],
+    " proyectarNombres vacíos" ~: (proyectarNombres usuariosVacios) ~?= [] 
+    ]
 
 testsuite2 = test [
     " amigosDe alguien social" ~: esPermutacion (amigosDe redA usuario2) [usuario1, usuario4, usuario3, usuario7],
