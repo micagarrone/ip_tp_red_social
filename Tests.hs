@@ -48,7 +48,10 @@ testsuite7 = test [
     ]
 
 testsuite8 = test [
-    " lesGustanLasMismasPublicaciones 2" ~: (lesGustanLasMismasPublicaciones redB usuario1 usuario3) ~?= True
+    " lesGustanLasMismasPublicaciones verdadero en cierta red" ~: (lesGustanLasMismasPublicaciones redC usuario2 usuario4) ~?= True,
+    " lesGustanLasMismasPublicaciones falso en otra red" ~: (lesGustanLasMismasPublicaciones redB usuario2 usuario4) ~?= False,
+    " lesGustanLasMismasPublicaciones no les gusta nada" ~: (lesGustanLasMismasPublicaciones redC usuario3 usuario11) ~?= True,
+    " lesGustanLasMismasPublicaciones no hay publicaciones" ~: (lesGustanLasMismasPublicaciones redR usuario1 usuario2) ~?= True
     ]
 
 testsuite9 = test [
@@ -140,7 +143,8 @@ relacionesB = [relacion1_2, relacion2_3]
 publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
 redB = (usuariosB, relacionesB, publicacionesB)
 
-
+publicacionesC = [publicacion1_1, publicacion1_3, publicacion3_3]
+redC = (usuariosB, relacionesB, publicacionesC)
 
 usuariosVacios = []
 publicacionesVacias = []
