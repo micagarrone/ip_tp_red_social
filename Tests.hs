@@ -7,24 +7,26 @@ main = runTestTT todosLosTest
 todosLosTest = test [testsuite1, testsuite2, testsuite3, testsuite4, testsuite5, testsuite6, testsuite7, testsuite8, testsuite9, testsuite10]
 
 testsuite1 = test [
-    " nombresDeUsuarios sin nombres repetidos" ~: esPermutacion (nombresDeUsuarios redA) ["Juan","JOJO","PEPSIMAN","Mirtha Legrand"],
+    " nombresDeUsuarios sin nombres repetidos" ~: esPermutacion (nombresDeUsuarios redA) ["Juan","JOJO","PEPSIMAN","Mirtha Legrand", "Spiderman"],
     " nombresDeUsuarios con nombres repetidos" ~: esPermutacion (nombresDeUsuarios redB) ["Juan","PEPSIMAN","JOJO"],
     " nombresDeUsuarios red sin usuarios " ~: (nombresDeUsuarios redVacia) ~?= [] 
     ]   
 
 testsuite2 = test [
-    " amigosDe alguien social" ~: esPermutacion (amigosDe redA usuario2) [usuario1, usuario4, usuario3],
+    " amigosDe alguien social" ~: esPermutacion (amigosDe redA usuario2) [usuario1, usuario4, usuario3, usuario7],
     " amigosDe alguien solitario"  ~: (amigosDe redA usuario999) ~?= [] 
     ]
 
 testsuite3 = test [
-    " cantidadDeAmigos alguien social" ~: (cantidadDeAmigos redA usuario1) ~?= 2,
+    " cantidadDeAmigos alguien social" ~: (cantidadDeAmigos redA usuario1) ~?= 3,
     " cantidadDeAmigos alguien solitario" ~: (cantidadDeAmigos redR usuario999) ~?= 0,
     " cantidadDeAmigos alguien MUY social " ~: (cantidadDeAmigos redR usuarioR) ~?= 11
     ]
 
 testsuite4 = test [
-    " usuarioConMasAmigos 1" ~: expectAny (usuarioConMasAmigos redA) [usuario2, usuario4]
+    " usuarioConMasAmigos no hay empate" ~: (usuarioConMasAmigos redR) ~?= usuarioR,
+    " usuarioConMasAmigos hay empate" ~: expectAny (usuarioConMasAmigos redA) [usuario2, usuario4],
+    " usuarioConMasAmigos nadie tiene amigos " ~: expectAny (usuarioConMasAmigos redLobosSolitarios) usuariosR
     ]
 
 testsuite5 = test [
@@ -80,7 +82,6 @@ relacion2_4 = (usuario2, usuario4)
 relacion1_4 = (usuario4, usuario1) -- Notar que el orden en el que aparecen los usuarios es indistinto
 relacion2_3 = (usuario3, usuario2)
 relacion3_4 = (usuario4, usuario3)
-relacion1_1 = (usuario1, usuario1)
 relacion3_3 = (usuario3, usuario3)
 relacion2_5 = (usuario2, usuario5)
 relacion3_6 = (usuario3, usuario6)
@@ -89,6 +90,8 @@ relacion5_7 = (usuario7, usuario5)
 relacion8_9 = (usuario9, usuario8)
 relacion7_9 = (usuario7, usuario9)
 relacion10_9 = (usuario10, usuario9)
+relacion2_7 = (usuario2, usuario7)
+relacion1_6 = (usuario1, usuario6)
 
 relacionR_1 = (usuarioR, usuario1)
 relacionR_2 = (usuarioR, usuario2)
@@ -122,8 +125,8 @@ publicacion4_2 = (usuario4, "kjjjjjjjjjjjjj", [])
 publicacion4_3 = (usuario4, "un año en la selva hablandole a una camara apagada?", [usuario1, usuario3])
 
 
-usuariosA = [usuario1, usuario2, usuario3, usuario4]
-relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
+usuariosA = [usuario1, usuario2, usuario3, usuario4, usuario7]
+relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4, relacion1_6, relacion2_7]
 publicacionesA = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion1_5, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
 redA = (usuariosA, relacionesA, publicacionesA)
 
@@ -141,6 +144,8 @@ relacionesVacias = []
 redVacia = (usuariosVacios, relacionesVacias, publicacionesVacias)
 
 usuariosR = [usuarioR, usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10, usuario11, usuario999]
-relacionesR = [relacionR_1, relacionR_2, relacionR_3, relacionR_4, relacionR_5, relacionR_6, relacion7_R, relacion8_R, relacion9_R, relacion10_R, relacion11_R]
+relacionesR = [relacionR_1, relacionR_2, relacionR_3, relacionR_4, relacionR_5, relacionR_6, relacion7_R, relacion8_R, relacion9_R, relacion10_R, relacion11_R, relacion1_2,relacion1_3,relacion1_4]
 
 redR = (usuariosR, relacionesR, publicacionesVacias)
+
+redLobosSolitarios = (usuariosR, relacionesVacias, publicacionesVacias)
