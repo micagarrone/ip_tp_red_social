@@ -55,7 +55,9 @@ testsuite8 = test [
     ]
 
 testsuite9 = test [
-    " tieneUnSeguidorFiel 1" ~: (tieneUnSeguidorFiel redA usuario1) ~?= True
+    " tieneUnSeguidorFiel verdadero en cierta red" ~: (tieneUnSeguidorFiel redA usuario1) ~?= True,
+    " tieneUnSeguidorFiel falso en otra red"  ~: (tieneUnSeguidorFiel redB usuario1) ~?= False,
+    " tieneUnSeguidorFiel se auto-likeó todo" ~: (tieneUnSeguidorFiel redD usuario12) ~?= False
     ]
 
 testsuite10 = test [
@@ -100,6 +102,8 @@ relacion7_9 = (usuario7, usuario9)
 relacion10_9 = (usuario10, usuario9)
 relacion2_7 = (usuario2, usuario7)
 relacion1_6 = (usuario1, usuario6)
+relacion1_12 = (usuario1, usuario12)
+relacion12_3 = (usuario12, usuario3)
 
 relacionR_1 = (usuarioR, usuario1)
 relacionR_2 = (usuarioR, usuario2)
@@ -132,6 +136,10 @@ publicacion4_1 = (usuario4, "maximo cozzeti es un robot ruso", [usuario1, usuari
 publicacion4_2 = (usuario4, "kjjjjjjjjjjjjj", [])
 publicacion4_3 = (usuario4, "un año en la selva hablandole a una camara apagada?", [usuario1, usuario3])
 
+publicacion12_1 = (usuario12, "tortuga maritima", [usuario12, usuario1])
+publicacion12_2 = (usuario12, "usted es un debilitador social", [usuario12, usuario3])
+publicacion12_3 = (usuario12, "cuchame cumpleaños donde estan las sartenes de acero para el pescado?", [usuario12])
+publicacion12_4 = (usuario12, "uuuuu, pepitas", [usuario12, usuario1, usuario3])
 
 usuariosA = [usuario1, usuario2, usuario3, usuario4, usuario7]
 relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4, relacion1_6, relacion2_7]
@@ -145,6 +153,11 @@ redB = (usuariosB, relacionesB, publicacionesB)
 
 publicacionesC = [publicacion1_1, publicacion1_3, publicacion3_3]
 redC = (usuariosB, relacionesB, publicacionesC)
+
+usuariosD = [usuario1, usuario2, usuario3, usuario5, usuario12]
+relacionesD = [relacion1_2, relacion2_3, relacion1_12, relacion12_3]
+publicacionesD = [publicacion1_1, publicacion1_3, publicacion3_3, publicacion12_1, publicacion12_2, publicacion12_3, publicacion12_4]
+redD = (usuariosD, relacionesD, publicacionesD)
 
 usuariosVacios = []
 publicacionesVacias = []
