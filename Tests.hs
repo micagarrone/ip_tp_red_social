@@ -74,8 +74,7 @@ expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show
 --Al usarse con listas que no tienen repetidos, la especificación de "mismosElementos" funciona igual que chequear si una lista es permutación de otra
 esPermutacion actual expected = mismosElementos actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual) 
 
--- Ejemplos
-
+--Usuarios
 usuario1 = (1, "Juan")
 usuario2 = (2, "JOJO")
 usuario3 = (3, "PEPSIMAN")
@@ -91,40 +90,41 @@ usuario12 = (12, "Maximo Cozzeti")
 usuario999 = (999, "Bobby Vinton")
 usuarioR = (10000, "ROBERTO")
 
+--Relaciones
 relacion1_2 = (usuario1, usuario2)
 relacion1_3 = (usuario1, usuario3)
-relacion2_4 = (usuario2, usuario4)
-relacion1_4 = (usuario4, usuario1) -- Notar que el orden en el que aparecen los usuarios es indistinto
+relacion1_4 = (usuario4, usuario1)
+relacion1_6 = (usuario1, usuario6)
+relacion1_12 = (usuario1, usuario12)
 relacion2_3 = (usuario3, usuario2)
-relacion3_4 = (usuario4, usuario3)
-relacion3_3 = (usuario3, usuario3)
+relacion2_4 = (usuario2, usuario4)
 relacion2_5 = (usuario2, usuario5)
+relacion2_7 = (usuario2, usuario7)
+relacion3_3 = (usuario3, usuario3)
+relacion3_4 = (usuario4, usuario3)
 relacion3_6 = (usuario3, usuario6)
 relacion4_7 = (usuario4, usuario7)
 relacion5_6 = (usuario5, usuario6)
 relacion5_7 = (usuario7, usuario5)
 relacion6_7 = (usuario6, usuario7)
-relacion8_9 = (usuario9, usuario8)
 relacion7_9 = (usuario7, usuario9)
+relacion7_R = (usuario7, usuarioR)
+relacion8_9 = (usuario9, usuario8)
+relacion8_R = (usuario8, usuarioR)
+relacion9_R = (usuario9, usuarioR)
 relacion10_9 = (usuario10, usuario9)
-relacion2_7 = (usuario2, usuario7)
-relacion1_6 = (usuario1, usuario6)
-relacion1_12 = (usuario1, usuario12)
-relacion12_3 = (usuario12, usuario3)
+relacion10_R = (usuario10, usuarioR)
 relacion10_11 = (usuario10, usuario11)
-
+relacion11_R = (usuario11, usuarioR)
+relacion12_3 = (usuario12, usuario3)
 relacionR_1 = (usuarioR, usuario1)
 relacionR_2 = (usuarioR, usuario2)
 relacionR_3 = (usuarioR, usuario3)
 relacionR_4 = (usuarioR, usuario4)
 relacionR_5 = (usuarioR, usuario5)
 relacionR_6 = (usuarioR, usuario6)
-relacion7_R = (usuario7, usuarioR)
-relacion8_R = (usuario8, usuarioR)
-relacion9_R = (usuario9, usuarioR)
-relacion10_R = (usuario10, usuarioR)
-relacion11_R = (usuario11, usuarioR)
 
+--Publicaciones
 publicacion1_1 = (usuario1, "S", [usuario2, usuario4])
 publicacion1_2 = (usuario1, "P", [usuario4])
 publicacion1_3 = (usuario1, "A", [usuario2, usuario4])
@@ -149,6 +149,12 @@ publicacion12_2 = (usuario12, "usted es un debilitador social", [usuario12, usua
 publicacion12_3 = (usuario12, "cuchame cumpleaños donde estan las sartenes de acero para el pescado?", [usuario12])
 publicacion12_4 = (usuario12, "uuuuu, pepitas", [usuario12, usuario1, usuario3])
 
+--Redes
+usuariosVacios = []
+publicacionesVacias = []
+relacionesVacias = []
+redVacia = (usuariosVacios, relacionesVacias, publicacionesVacias)
+
 usuariosA = [usuario1, usuario2, usuario3, usuario4, usuario7]
 relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4, relacion1_6, relacion2_7]
 publicacionesA = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion1_5, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
@@ -167,19 +173,11 @@ relacionesD = [relacion1_2, relacion2_3, relacion1_12, relacion12_3]
 publicacionesD = [publicacion1_1, publicacion1_3, publicacion3_3, publicacion12_1, publicacion12_2, publicacion12_3, publicacion12_4]
 redD = (usuariosD, relacionesD, publicacionesD)
 
-usuariosVacios = []
-publicacionesVacias = []
-relacionesVacias = []
-
-redVacia = (usuariosVacios, relacionesVacias, publicacionesVacias)
-
 usuariosR = [usuarioR, usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10, usuario11, usuario999]
 relacionesR = [relacionR_1, relacionR_2, relacionR_3, relacionR_4, relacionR_5, relacionR_6, relacion7_R, relacion8_R, relacion9_R, relacion10_R, relacion11_R, relacion1_2,relacion1_3,relacion1_4]
-
 redR = (usuariosR, relacionesR, publicacionesVacias)
 
-relacionesZ = [relacionR_5, relacion6_7, relacion7_9, relacion8_9, relacion10_9, relacion10_11, relacion1_2,relacion2_4, relacion5_6]
-
-redZ = (usuariosR, relacionesZ, publicacionesVacias)
-
 redLobosSolitarios = (usuariosR, relacionesVacias, publicacionesVacias)
+
+relacionesZ = [relacionR_5, relacion6_7, relacion7_9, relacion8_9, relacion10_9, relacion10_11, relacion1_2,relacion2_4, relacion5_6]
+redZ = (usuariosR, relacionesZ, publicacionesVacias)
