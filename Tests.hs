@@ -7,8 +7,9 @@ main = runTestTT todosLosTest
 todosLosTest = test [testsuite1, testsuite2, testsuite3, testsuite4, testsuite5, testsuite6, testsuite7, testsuite8, testsuite9, testsuite10]
 
 testsuite1 = test [
-    " nombresDeUsuarios sin nombres repetidos" ~: esPermutacion (nombresDeUsuarios redA) ["Juan","Natalia","Pedro","Mariela"],
-    " nombresDeUsuarios con nombres repetidos" ~: esPermutacion (nombresDeUsuarios redB) ["Juan","Pedro","Natalia"]  
+    " nombresDeUsuarios sin nombres repetidos" ~: esPermutacion (nombresDeUsuarios redA) ["Juan","JOJO","PEPSIMAN","Mirtha Legrand"],
+    " nombresDeUsuarios con nombres repetidos" ~: esPermutacion (nombresDeUsuarios redB) ["Juan","PEPSIMAN","JOJO"],
+    " nombresDeUsuarios red sin usuarios " ~: (nombresDeUsuarios redVacia) ~?= [] 
     ]   
 
 testsuite2 = test [
@@ -55,16 +56,17 @@ esPermutacion actual expected = mismosElementos actual expected ~? ("expected an
 -- Ejemplos
 
 usuario1 = (1, "Juan")
-usuario2 = (2, "Natalia")
-usuario3 = (3, "Pedro")
-usuario4 = (4, "Mariela")
-usuario5 = (5, "Natalia")
+usuario2 = (2, "JOJO")
+usuario3 = (3, "PEPSIMAN")
+usuario4 = (4, "Mirtha Legrand")
+usuario5 = (5, "JOJO")
 usuario6 = (6, "Batman")
 usuario7 = (7, "Spiderman")
 usuario8 = (8, "Goku")
 usuario9 = (9, "Pikachu")
 usuario10 = (10, "Adolfo")
 usuario11 = (11, "Juan")
+usuario12 = (12, "Maximo Cozzeti")
 
 relacion1_2 = (usuario1, usuario2)
 relacion1_3 = (usuario1, usuario3)
@@ -82,30 +84,38 @@ relacion8_9 = (usuario9, usuario8)
 relacion7_9 = (usuario7, usuario9)
 relacion10_9 = (usuario10, usuario9)
 
-publicacion1_1 = (usuario1, "Este es mi primer post", [usuario2, usuario4])
-publicacion1_2 = (usuario1, "Este es mi segundo post", [usuario4])
-publicacion1_3 = (usuario1, "Este es mi tercer post", [usuario2, usuario5])
-publicacion1_4 = (usuario1, "Este es mi cuarto post", [])
-publicacion1_5 = (usuario1, "Este es como mi quinto post", [usuario5])
+publicacion1_1 = (usuario1, "S", [usuario2, usuario4])
+publicacion1_2 = (usuario1, "P", [usuario5])
+publicacion1_3 = (usuario1, "A", [usuario2, usuario5])
+publicacion1_4 = (usuario1, "M", [])
+publicacion1_5 = (usuario1, "X", [usuario4])
+publicacion1_6 = (usuario1, "D", [usuario1])
 
-publicacion2_1 = (usuario2, "Hello World", [usuario4])
-publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario4])
+publicacion2_1 = (usuario2, "The cake is a lie", [usuario4])
+publicacion2_2 = (usuario2, "Still alive", [usuario1, usuario4])
+publicacion2_3 = (usuario2, "Want you gone", [usuario10, usuario11, usuario1])
 
-publicacion3_1 = (usuario3, "Lorem Ipsum", [])
-publicacion3_2 = (usuario3, "dolor sit amet", [usuario2])
-publicacion3_3 = (usuario3, "consectetur adipiscing elit", [usuario2, usuario5])
+publicacion3_1 = (usuario3, "saitama le gana", [])
+publicacion3_2 = (usuario3, "HEY LISTEN", [usuario2])
+publicacion3_3 = (usuario3, "put your grasses on", [usuario2, usuario5])
 
-publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
-publicacion4_2 = (usuario4, "I am Bob", [])
-publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
+publicacion4_1 = (usuario4, "maximo cozzeti es un robot ruso", [usuario1, usuario2])
+publicacion4_2 = (usuario4, "kjjjjjjjjjjjjj", [])
+publicacion4_3 = (usuario4, "un año en la selva hablandole a una camara apagada?", [usuario1, usuario3])
 
 
-usuariosA = [usuario1, usuario2, usuario3, usuario4]
+usuariosA = [usuario1, usuario2, usuario3, usuario4, usuario6, usuario8, usuario11]
 relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
-publicacionesA = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
+publicacionesA = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion2_4, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
 redA = (usuariosA, relacionesA, publicacionesA)
 
 usuariosB = [usuario1, usuario2, usuario3, usuario5, usuario11]
 relacionesB = [relacion1_2, relacion2_3]
 publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
 redB = (usuariosB, relacionesB, publicacionesB)
+
+usuariosVacios = []
+publicacionesVacias = []
+relacionesVacias = []
+
+redVacia = (usuariosVacios, relacionesVacias, publicacionesVacias)
