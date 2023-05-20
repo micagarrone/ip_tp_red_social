@@ -37,11 +37,14 @@ testsuite5 = test [
 testsuite6 = test [
     " publicacionesDe de alguien en red A" ~: esPermutacion (publicacionesDe redA usuario3) [publicacion3_1, publicacion3_2],
     " publicacionesDe de ese mismo alguien en red B" ~: esPermutacion (publicacionesDe redB usuario3) [publicacion3_1, publicacion3_2, publicacion3_3],
-    " publicacionesDe alguien que no publica"  ~: (publicacionesDe redA usuario7)~?= []
+    " publicacionesDe alguien que no publica"  ~: (publicacionesDe redA usuario7) ~?= []
     ]
 
 testsuite7 = test [
-    " publicacionesQueLeGustanA 1" ~: esPermutacion (publicacionesQueLeGustanA redA usuario1) [publicacion2_2, publicacion4_1]
+    " publicacionesQueLeGustanA alguien en red A" ~: esPermutacion (publicacionesQueLeGustanA redA usuario1) [publicacion2_2, publicacion4_1],
+    " publicacionesQueLeGustanA ese mismo alguien en red B" ~: esPermutacion (publicacionesQueLeGustanA redB usuario1) [publicacion3_3],
+    " publicacionesQueLeGustanA alguien que no le gusta nada " ~: (publicacionesQueLeGustanA redA usuario7) ~?= [],
+    " publicacionesQueLeGustanA en red sin publicaciones" ~: (publicacionesQueLeGustanA redR usuario7) ~?= []
     ]
 
 testsuite8 = test [
@@ -120,7 +123,7 @@ publicacion2_3 = (usuario2, "Want you gone", [usuario10, usuario11, usuario1])
 
 publicacion3_1 = (usuario3, "saitama le gana", [])
 publicacion3_2 = (usuario3, "HEY LISTEN", [usuario2])
-publicacion3_3 = (usuario3, "put your grasses on", [usuario2, usuario5])
+publicacion3_3 = (usuario3, "put your grasses on", [usuario1, usuario5])
 
 publicacion4_1 = (usuario4, "maximo cozzeti es un robot ruso", [usuario1, usuario2])
 publicacion4_2 = (usuario4, "kjjjjjjjjjjjjj", [])
