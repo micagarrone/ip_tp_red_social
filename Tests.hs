@@ -13,7 +13,8 @@ testsuite1 = test [
     ]   
 
 testsuite2 = test [
-    " amigosDe 1" ~: esPermutacion (amigosDe redA usuario1) [usuario2, usuario4]
+    " amigosDe alguien social" ~: esPermutacion (amigosDe redA usuario1) [usuario2, usuario4],
+    " amigosDe alguien solitario"  ~: (amigosDe redA usuario999) ~?= [] 
     ]
 
 testsuite3 = test [
@@ -67,6 +68,7 @@ usuario9 = (9, "Pikachu")
 usuario10 = (10, "Adolfo")
 usuario11 = (11, "Juan")
 usuario12 = (12, "Maximo Cozzeti")
+usuario999 = (999, "Bobby Vinton")
 
 relacion1_2 = (usuario1, usuario2)
 relacion1_3 = (usuario1, usuario3)
@@ -104,9 +106,9 @@ publicacion4_2 = (usuario4, "kjjjjjjjjjjjjj", [])
 publicacion4_3 = (usuario4, "un año en la selva hablandole a una camara apagada?", [usuario1, usuario3])
 
 
-usuariosA = [usuario1, usuario2, usuario3, usuario4, usuario6, usuario8, usuario11]
+usuariosA = [usuario1, usuario2, usuario3, usuario4, usuario6, usuario8, usuario11, usuario999]
 relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
-publicacionesA = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion2_4, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
+publicacionesA = [publicacion1_1, publicacion1_2, publicacion1_3, publicacion1_4, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
 redA = (usuariosA, relacionesA, publicacionesA)
 
 usuariosB = [usuario1, usuario2, usuario3, usuario5, usuario11]
