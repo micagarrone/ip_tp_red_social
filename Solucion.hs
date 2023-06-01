@@ -148,17 +148,13 @@ estanRelacionadosIndirectamente :: [Relacion] -> Usuario -> Usuario -> Bool
 estanRelacionadosIndirectamente r u1 u2 | primerRelacionadoDeUsuario r u1 == u1 = False
                                         | primerRelacionadoDeUsuario r u1 == u2 = True
                                         | otherwise = estanRelacionadosIndirectamente relacionSimplificada u1 u2
-                                        where relacionSimplificada = simplificarRelacionesDeUsuario r u1
-
---"El amigo de mi amigo es mi amigo"
-simplificarRelacionesDeUsuario :: [Relacion] -> Usuario -> [Relacion]
-simplificarRelacionesDeUsuario r u =  reemplazarConUsuarioAUsuario r u (primerRelacionadoDeUsuario r u)
+                                        where relacionSimplificada = reemplazarConUsuarioAUsuario r u1 (primerRelacionadoDeUsuario r u1)--"El amigo de mi amigo es mi amigo"
 
 reemplazarConUsuarioAUsuario :: [Relacion] -> Usuario -> Usuario -> [Relacion]
 reemplazarConUsuarioAUsuario [r] u1 u2  | fst r == u2 = [(u1, snd r)]
                                         | snd r == u2 = [(fst r, u1)]
                                         | otherwise = [r]
-reemplazarConUsuarioAUsuario (r:rs) u1 u2   = (head (reemplazarConUsuarioAUsuario [r] u1 u2)) : (reemplazarConUsuarioAUsuario rs u1 u2 )
+reemplazarConUsuarioAUsuario (r:rs) u1 u2   = (reemplazarConUsuarioAUsuario [r] u1 u2) ++ (reemplazarConUsuarioAUsuario rs u1 u2 )
 
 primerRelacionadoDeUsuario :: [Relacion] -> Usuario -> Usuario
 primerRelacionadoDeUsuario [] u = u
