@@ -152,8 +152,7 @@ estanRelacionadosIndirectamente r u1 u2 | (not (sigueHabiendoUsuarioOrigen r u1)
 
 --"El amigo de mi amigo es mi amigo"
 simplificarRelacionesDeUsuario :: [Relacion] -> Usuario -> [Relacion]
-simplificarRelacionesDeUsuario r u = eliminarRelacionesMismoUsuario (reemplazarConUsuarioAUsuario (relacionNormalizada) u (primerRelacionadoDeUsuario relacionNormalizada u))
-                                     where relacionNormalizada = ponerSiemprePrimeroAUsuario (eliminarRelacionesMismoUsuario r) u
+simplificarRelacionesDeUsuario r u = eliminarRelacionesMismoUsuario (reemplazarConUsuarioAUsuario r u (primerRelacionadoDeUsuario r u))
 
 sigueHabiendoUsuarioOrigen :: [Relacion] -> Usuario -> Bool
 sigueHabiendoUsuarioOrigen [r] u = (fst r == u) || (snd r == u)
@@ -169,14 +168,12 @@ reemplazarConUsuarioAUsuario [r] u1 u2  | fst r == u2 = [(u1, snd r)]
                                         | otherwise = [r]
 reemplazarConUsuarioAUsuario (r:rs) u1 u2   = (head (reemplazarConUsuarioAUsuario [r] u1 u2)) : (reemplazarConUsuarioAUsuario rs u1 u2 )
 
-ponerSiemprePrimeroAUsuario :: [Relacion] -> Usuario -> [Relacion]
-ponerSiemprePrimeroAUsuario [r] u   | snd r == u = [(snd r, fst r)]
-                                    | otherwise = [r]
-ponerSiemprePrimeroAUsuario (r:rs) u = (head (ponerSiemprePrimeroAUsuario [r] u)) : (ponerSiemprePrimeroAUsuario rs u)
-
 primerRelacionadoDeUsuario :: [Relacion] -> Usuario -> Usuario
-primerRelacionadoDeUsuario [r] u = snd r
-primerRelacionadoDeUsuario (r:rs) u | fst r == u = snd r
+primerRelacionadoDeUsuario [r] u    | fst r == u && snd r /= u = snd r
+                                    | snd r == u && fst r /= u = fst r
+                                    | otherwise = u
+primerRelacionadoDeUsuario (r:rs) u | fst r == u && snd r /= u = snd r
+                                    | snd r == u && fst r /= u = fst r
                                     | otherwise = primerRelacionadoDeUsuario rs u
 
 eliminarRelacionesMismoUsuario :: [Relacion] -> [Relacion]
