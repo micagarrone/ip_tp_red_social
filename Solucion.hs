@@ -154,10 +154,6 @@ estanRelacionadosIndirectamente r u1 u2 | primerRelacionadoDeUsuario r u1 == u1 
 simplificarRelacionesDeUsuario :: [Relacion] -> Usuario -> [Relacion]
 simplificarRelacionesDeUsuario r u =  reemplazarConUsuarioAUsuario r u (primerRelacionadoDeUsuario r u)
 
-sigueHabiendoUsuarioOrigen :: [Relacion] -> Usuario -> Bool
-sigueHabiendoUsuarioOrigen [r] u = (fst r == u) || (snd r == u)
-sigueHabiendoUsuarioOrigen (r:rs) u = sigueHabiendoUsuarioOrigen [r] u || sigueHabiendoUsuarioOrigen rs u
-
 reemplazarConUsuarioAUsuario :: [Relacion] -> Usuario -> Usuario -> [Relacion]
 reemplazarConUsuarioAUsuario [r] u1 u2  | fst r == u2 = [(u1, snd r)]
                                         | snd r == u2 = [(fst r, u1)]
