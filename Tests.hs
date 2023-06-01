@@ -72,7 +72,8 @@ testsuite10 = test [
     " existeSecuenciaDeAmigos cluster de amigos 2" ~: (existeSecuenciaDeAmigos redZ usuario4 usuario1) ~?= True,
     " existeSecuenciaDeAmigos entre clusters separados"  ~: (existeSecuenciaDeAmigos redZ usuario2 usuario8) ~?= False,
     " existeSecuenciaDeAmigos entre un mismo usuario sin amigos" ~: (existeSecuenciaDeAmigos redZ usuario999 usuario999) ~?= False,
-    " existeSecuenciaDeAmigos entre un mismo usuario con amigos" ~: (existeSecuenciaDeAmigos redZ usuario1 usuario1) ~?= True
+    " existeSecuenciaDeAmigos entre un mismo usuario con amigos" ~: (existeSecuenciaDeAmigos redZ usuario1 usuario1) ~?= True,
+    " existeSecuenciaDeAmigos en red sin amigos" ~: (existeSecuenciaDeAmigos redLobosSolitarios usuario1 usuario6) ~?= False
     ]
 
 expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)

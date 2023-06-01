@@ -145,22 +145,18 @@ existeSecuenciaDeAmigos red u1 u2   | u1 == u2 && (cantidadDeAmigos red u1 > 0) 
                                     | otherwise = estanRelacionadosIndirectamente (relaciones red) u1 u2
 
 estanRelacionadosIndirectamente :: [Relacion] -> Usuario -> Usuario -> Bool
-estanRelacionadosIndirectamente r u1 u2 | (not (sigueHabiendoUsuarioOrigen r u1)) = False
-                                        | seEncontroRelacion r u1 u2 = True
+estanRelacionadosIndirectamente r u1 u2 | primerRelacionadoDeUsuario r u1 == u1 = False
+                                        | primerRelacionadoDeUsuario r u1 == u2 = True
                                         | otherwise = estanRelacionadosIndirectamente relacionSimplificada u1 u2
                                         where relacionSimplificada = simplificarRelacionesDeUsuario r u1
 
 --"El amigo de mi amigo es mi amigo"
 simplificarRelacionesDeUsuario :: [Relacion] -> Usuario -> [Relacion]
-simplificarRelacionesDeUsuario r u = eliminarRelacionesMismoUsuario (reemplazarConUsuarioAUsuario r u (primerRelacionadoDeUsuario r u))
+simplificarRelacionesDeUsuario r u =  reemplazarConUsuarioAUsuario r u (primerRelacionadoDeUsuario r u)
 
 sigueHabiendoUsuarioOrigen :: [Relacion] -> Usuario -> Bool
 sigueHabiendoUsuarioOrigen [r] u = (fst r == u) || (snd r == u)
 sigueHabiendoUsuarioOrigen (r:rs) u = sigueHabiendoUsuarioOrigen [r] u || sigueHabiendoUsuarioOrigen rs u
-
-seEncontroRelacion :: [Relacion] -> Usuario -> Usuario -> Bool
-seEncontroRelacion [r] u1 u2 = ((fst r == u1) && (snd r == u2)) || ((fst r == u2) && (snd r == u1))
-seEncontroRelacion (r:rs) u1 u2 = seEncontroRelacion [r] u1 u2 || seEncontroRelacion rs u1 u2
 
 reemplazarConUsuarioAUsuario :: [Relacion] -> Usuario -> Usuario -> [Relacion]
 reemplazarConUsuarioAUsuario [r] u1 u2  | fst r == u2 = [(u1, snd r)]
@@ -169,14 +165,7 @@ reemplazarConUsuarioAUsuario [r] u1 u2  | fst r == u2 = [(u1, snd r)]
 reemplazarConUsuarioAUsuario (r:rs) u1 u2   = (head (reemplazarConUsuarioAUsuario [r] u1 u2)) : (reemplazarConUsuarioAUsuario rs u1 u2 )
 
 primerRelacionadoDeUsuario :: [Relacion] -> Usuario -> Usuario
-primerRelacionadoDeUsuario [r] u    | fst r == u && snd r /= u = snd r
-                                    | snd r == u && fst r /= u = fst r
-                                    | otherwise = u
+primerRelacionadoDeUsuario [] u = u
 primerRelacionadoDeUsuario (r:rs) u | fst r == u && snd r /= u = snd r
                                     | snd r == u && fst r /= u = fst r
                                     | otherwise = primerRelacionadoDeUsuario rs u
-
-eliminarRelacionesMismoUsuario :: [Relacion] -> [Relacion]
-eliminarRelacionesMismoUsuario [] = []
-eliminarRelacionesMismoUsuario (r:rs)   | fst r == snd r = eliminarRelacionesMismoUsuario rs
-                                        | otherwise = r : eliminarRelacionesMismoUsuario rs
